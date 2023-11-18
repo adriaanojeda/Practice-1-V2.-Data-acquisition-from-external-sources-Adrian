@@ -3,14 +3,10 @@ package org.example.control;
 import org.example.model.Location;
 import org.example.model.Weather;
 
-import java.time.Instant;
+import java.io.IOException;
+import java.util.List;
 
 public interface WeatherSupplier {
 
-
-        public default Weather getWeather(Location location, Instant ts){
-
-            return null;
-        }
-
+    List<Weather> getWeather(Location location) throws IOException;
 }

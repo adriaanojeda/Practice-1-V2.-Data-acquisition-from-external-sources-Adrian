@@ -1,42 +1,31 @@
 package org.example.control;
 
-import org.example.model.Location;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
+        try {
+            FileManager fileManager = new FileManager();
+            String apiKey = fileManager.readFile("C:\\Users\\adrio\\OneDrive\\Escritorio\\Practica 1\\src\\main\\resources\\apiKey.txt");
 
-        List<Location> locations = loadLocationsFromFile("locations.tsv");
-        //TODO Leer apiKey
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            long period = 6 * 60 * 60; // el período se especifica en segundos
 
+            String path = "C:\\Users\\adrio\\OneDrive\\Escritorio\\Practica 1\\src\\main\\resources\\path.txt";
+            WeatherController weatherController = new WeatherController(new OpenWeatherMapSupplier(apiKey), new SqliteWeatherStore());
 
-        //TODO Crear controladores
-
-
-        //TODO Crear la tarea periódica (cada 6h) -> ejecutar tarea
-    }
-
-    private static List<Location> loadLocationsFromFile(String filePath) {
-        List<Location> locations = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
-            String line;
-            while ((line = br.readLine()) != null){
-                String[] parts = line.split("\t");
-                if (parts.length == 3){
-                    String name = parts[0];
-                    float latitude = Float.parseFloat(parts[1]);
-                    float longitude = Float.parseFloat(parts[2]);
-                    locations.add(new Location(name, latitude, longitude));
+            scheduler.scheduleAtFixedRate(() -> {
+                try {
+                    weatherController.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-        } catch (IOException e) {
+            }, 0, period, TimeUnit.SECONDS);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return locations;
     }
 }

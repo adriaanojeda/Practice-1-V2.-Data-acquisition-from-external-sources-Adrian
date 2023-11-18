@@ -1,22 +1,24 @@
 package org.example.model;
 
-public class Location extends Weather {
-    private int lat;
-    private int lon;
+public class Location {
+    private double lat;
+    private double lon;
     private String island;
 
-
-    public Location(String lat, float lon, float island) {
+    public Location(double lat, double lon, String island) {
         this.lat = lat;
         this.lon = lon;
         this.island = island;
     }
+    public Location(String island) {
+        this.island = island;
+    }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public int getLon() {
+    public double getLon() {
         return lon;
     }
 
