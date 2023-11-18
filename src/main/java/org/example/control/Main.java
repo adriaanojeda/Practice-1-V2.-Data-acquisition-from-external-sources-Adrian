@@ -7,14 +7,14 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         try {
-            FileManager fileManager = new FileManager();
+            OpenReader fileManager = new OpenReader();
             String apiKey = fileManager.readFile("C:\\Users\\adrio\\OneDrive\\Escritorio\\Practica 1\\src\\main\\resources\\apiKey.txt");
 
             ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             long period = 6 * 60 * 60; // el período se especifica en segundos
 
             String path = "C:\\Users\\adrio\\OneDrive\\Escritorio\\Practica 1\\src\\main\\resources\\path.txt";
-            WeatherController weatherController = new WeatherController(new OpenWeatherMapSupplier(apiKey), new SqliteWeatherStore());
+            WeatherExecuter weatherController = new WeatherExecuter(new OpenWeatherMap(apiKey), new SqliteWeather());
 
             scheduler.scheduleAtFixedRate(() -> {
                 try {

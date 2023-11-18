@@ -6,7 +6,7 @@ import org.example.model.Weather;
 import java.io.IOException;
 import java.util.List;
 
-public interface WeatherSupplier {
+public interface WeatherStore {
 
     List<Weather> getWeather(Location location) throws IOException;
 }

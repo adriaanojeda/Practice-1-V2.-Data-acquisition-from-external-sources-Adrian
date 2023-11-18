@@ -11,7 +11,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 
-public class SqliteWeatherStore {
+public class SqliteWeather {
     private Connection connect() throws SQLException {
         String url = "jdbc:sqlite: DataBase.db" ;
         return DriverManager.getConnection(url);

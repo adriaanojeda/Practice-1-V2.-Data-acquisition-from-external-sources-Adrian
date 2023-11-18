@@ -4,7 +4,6 @@ import org.example.model.Location;
 import org.example.model.Weather;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,11 +18,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
-public class OpenWeatherMapSupplier implements WeatherSupplier {
+public class OpenWeatherMap implements WeatherStore {
 
     private static String apiKey;
 
-    public OpenWeatherMapSupplier(String apiKey) {
+    public OpenWeatherMap(String apiKey) {
         this.apiKey = apiKey;
     }
 

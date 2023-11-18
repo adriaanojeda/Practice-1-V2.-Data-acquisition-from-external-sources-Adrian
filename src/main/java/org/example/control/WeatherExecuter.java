@@ -8,20 +8,18 @@ import org.example.model.Weather;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherController implements Runnable {
+public class WeatherExecuter implements Runnable {
 
-    private OpenWeatherMapSupplier openWeatherMapSupplier;
-    private SqliteWeatherStore sqliteWeatherStore;
+    private OpenWeatherMap openWeatherMapSupplier;
+    private SqliteWeather sqliteWeatherStore;
 
-    public WeatherController(OpenWeatherMapSupplier openWeatherMapSupplier, SqliteWeatherStore sqliteWeatherStore) {
+    public WeatherExecuter(OpenWeatherMap openWeatherMapSupplier, SqliteWeather sqliteWeatherStore) {
         this.openWeatherMapSupplier = openWeatherMapSupplier;
         this.sqliteWeatherStore = sqliteWeatherStore;
     }
@@ -55,8 +53,8 @@ public class WeatherController implements Runnable {
                 List<Weather> weatherList = openWeatherMapSupplier.getWeather(location);
                 try {
                     for (Weather weather : weatherList) {
-                        String apiUrl = OpenWeatherMapSupplier.getApi(location);
-                        JsonObject jsonResult = OpenWeatherMapSupplier.getJsonData(apiUrl);
+                        String apiUrl = OpenWeatherMap.getApi(location);
+                        JsonObject jsonResult = OpenWeatherMap.getJsonData(apiUrl);
                         JsonArray list = jsonResult.getAsJsonArray("list");
 
                         for (int i = 0; i < list.size(); i++) {
